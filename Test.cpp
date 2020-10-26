@@ -1,10 +1,11 @@
 ﻿/*
 1.Добавить возможность исправления слова
-2.Отдельную функцию для проверки правильности перевода с английского на русский
-3.Из-за странной формулы в случайном выводе есть смысл огородить слова, поставив сверху и снизу пару строк в стиле *строка n*
+2.Во время записи новых слов проверить, не записано ли уже это слово
+3.Удаление конкретных слов
 4.Примеры использования слов в том или ином контексте
+5.По приколу можно сделать экзамен. Набираешь N-е кол-во очков - получаешь ссылку на гифку с котиком
 
-N.Возможно добавить отдельно фразы (но без проверки на правильность перевода - сразу с переводом выдавать)
+666.Возможно добавить отдельно фразы (но без проверки на правильность перевода - сразу с переводом выдавать)
 */
 #include <fstream>//for possibility work with files
 #include <iostream> //for input/output
@@ -17,7 +18,7 @@ void Information()
     std::cout << "1 - записать новое слово " << std::endl;
     std::cout << "2 - получить случайное слово " << std::endl;
     std::cout << "3 - проверка перевода с русского на английский" << std::endl;
-    std::cout << "4 - проверка перевода с английского на русский (еще не готово)" << std::endl;
+    std::cout << "4 - проверка перевода с английского на русский" << std::endl;
     std::cout << "5 - фразы на английском (еще не готово)" << std::endl;
 }
 void InputEnglishWords(std::string line) //input new eng word
@@ -39,7 +40,7 @@ void InputTranslatedWords () //input new translated word
     Information();
 }
 
-void RandomOutput() 
+void RandomOutput() //output random couple words
 {
     unsigned int index = 0;
     std::ifstream EngWordsOutput("english.txt"); 
@@ -72,7 +73,7 @@ void RandomOutput()
     Information();
 }
 
-void Zverify()
+void Zverify()//output translated, input eng
 {
     std::ifstream Translated("translated.txt");
     int index = 0;
@@ -120,6 +121,54 @@ void Zverify()
     Information();
 }
 
+void ReverseVerify() //output eng, input translated
+{
+    std::ifstream Translated("english.txt");
+    int index = 0;
+    std::string Translate;
+    for (; !Translated.eof(); ) {
+        std::string buffer;
+        Translated >> buffer;
+        index += 1;
+    }
+    Translated.close();
+    std::ifstream TranslatedSecond("english.txt");//повторное открытие
+    unsigned int digit = time(NULL) * rand() % (index)+1;
+    for (int i = 0; i < digit; i++)
+    {
+        std::string buffer;
+        TranslatedSecond >> buffer;
+        if (i == digit - 1)
+        {
+            Translate = buffer;
+        }
+    }
+    TranslatedSecond.close();//edge of output translated word
+    std::cout << Translate << std::endl << "Введите перевод" << std::endl;
+    std::ifstream EngWord("translated.txt");
+    for (int i = 0; i < digit; i++)
+    {
+        std::string buffer;
+        EngWord >> buffer;
+        if (i == digit - 1)
+        {
+            bool temp = false;
+            while (!temp)
+            {
+                std::string InputWord; //перевод слова, вводимый с клавиатуры
+                std::cin >> InputWord;
+                if (InputWord == buffer)
+                    temp = true;
+                else
+                    std::cout << "Неверно. Попробуйте еще раз" << std::endl;
+            }
+            std::cout << "You're right" << std::endl;
+            break;
+        }
+    }
+    Information();
+}
+
 int main(int argc, char* argv[])
 {
     SetConsoleCP(1251);//correct input
@@ -142,6 +191,9 @@ int main(int argc, char* argv[])
             break;
         case 3:
             Zverify();
+            break;
+        case 4:
+            ReverseVerify();
             break;
         default:
             Information();
