@@ -1,6 +1,6 @@
 ﻿/*
 1.Добавить возможность исправления слова
-2.Отдельную функцию для проверки правильности перевода с английского на русский и обратно
+2.Отдельную функцию для проверки правильности перевода с английского на русский
 3.Из-за странной формулы в случайном выводе есть смысл огородить слова, поставив сверху и снизу пару строк в стиле *строка n*
 4.Примеры использования слов в том или ином контексте
 
@@ -13,11 +13,10 @@ N.Возможно добавить отдельно фразы (но без п�
 #include <string>
 void Information()
 {
-    std::cout << "(╯°□°）╯" << std::endl;
     std::cout << "0 - Закончить" << std::endl;
     std::cout << "1 - записать новое слово " << std::endl;
     std::cout << "2 - получить случайное слово " << std::endl;
-    std::cout << "3-проверка перевода с русского на английский (еще не готово)" << std::endl;
+    std::cout << "3 - проверка перевода с русского на английский" << std::endl;
     std::cout << "4 - проверка перевода с английского на русский (еще не готово)" << std::endl;
     std::cout << "5 - фразы на английском (еще не готово)" << std::endl;
 }
@@ -78,19 +77,24 @@ void Zverify()
     std::ifstream Translated("translated.txt");
     int index = 0;
     std::string Translate;
-    for (; !Translated.eof(); )
+    for (; !Translated.eof(); ) {
+        std::string buffer;
+        Translated >> buffer;
         index += 1;
+    }
+    Translated.close();
+    std::ifstream TranslatedSecond("translated.txt");//повторное открытие
     unsigned int digit = time(NULL) * rand() % (index)+1;
     for (int i = 0; i < digit; i++)
     {
         std::string buffer;
-        Translated >> buffer;
+        TranslatedSecond >> buffer;
         if (i == digit - 1)
         {
             Translate = buffer;
         }
     }
-    Translated.close();//edge of output translated word
+    TranslatedSecond.close();//edge of output translated word
     std::cout << Translate << std::endl << "Введите перевод" << std::endl;
     std::ifstream EngWord("english.txt");
     for (int i = 0; i < digit; i++)
@@ -102,11 +106,18 @@ void Zverify()
             bool temp = false;
             while (!temp)
             {
-
+                std::string InputWord; //перевод слова, вводимый с клавиатуры
+                std::cin >> InputWord;
+                if (InputWord == buffer)
+                    temp = true;
+                else
+                    std::cout << "Неверно. Попробуйте еще раз" << std::endl;
             }
             std::cout << "You're right" << std::endl;
+            break;
         }
     }
+    Information();
 }
 
 int main(int argc, char* argv[])
@@ -128,6 +139,9 @@ int main(int argc, char* argv[])
             break;
         case 2:
             RandomOutput();
+            break;
+        case 3:
+            Zverify();
             break;
         default:
             Information();
