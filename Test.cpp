@@ -113,7 +113,7 @@ void Zverify()//output translated, input eng
             while (!temp)
             {
                 std::string InputWord; //перевод слова, вводимый с клавиатуры
-                std::cin >> InputWord;
+                std::getline(std::cin, InputWord);
                 if (InputWord == buffer)
                     temp = true;
                 else
@@ -155,19 +155,18 @@ void ReverseVerify() //output eng, input translated
     {
         std::string buffer;
         std::getline(EngWord, buffer);
-        //EngWord >> buffer;
         if (i == digit - 1)
         {
             bool temp = false;
             while (!temp)
             {
                 std::string InputWord; //перевод слова, вводимый с клавиатуры
-                std::cin >> InputWord;
+                std::getline(std::cin, InputWord);
                 if (InputWord == buffer)
                     temp = true;
-                else {              //REVIEW
+                else {                                                                            //REVIEW
                     std::cout << "Неверно. Попробуйте еще раз" << std::endl;
-                    std::cout << buffer << std::endl;
+                    //std::cout << InputWord << ' ' << buffer << std::endl;
                 }
             }
             std::cout << "You're right" << std::endl;
@@ -176,7 +175,7 @@ void ReverseVerify() //output eng, input translated
     }
     Information();
 }
-void RandomPhrases()
+void RandomPhrases() //output random phrase in eng and translate
 {
     unsigned int index = 0;
     std::ifstream Phrase("phrases.txt");
@@ -185,8 +184,7 @@ void RandomPhrases()
         std::string buffer;
         std::getline(Phrase, buffer);
     }
-    std::cout << index << " index" << std::endl;
-    unsigned int digit = time(NULL) * rand() % (index)+1; //the formula was stole from the internet
+    unsigned int digit = time(NULL) * rand() % (index)+1; //the formula was stolen from the internet
     Phrase.close();
     std::ifstream PhraseSecond("phrases.txt");
     for (int i = 0; i < digit; i++) {
@@ -204,7 +202,6 @@ int main(int argc, char* argv[])
 {
     SetConsoleCP(1251);//correct input
     SetConsoleOutputCP(1251);//correct output
-    setlocale(LC_ALL, "");
     int index;//magic number, yeah
     std::string line;
     Information();
@@ -214,7 +211,7 @@ int main(int argc, char* argv[])
         {
         case 1:
             std::cout << "Just write this FWord" << std::endl;
-            std::cin>>line;
+            std::cin >> line;
             InputEnglishWords(line);
             InputTranslatedWords();
             break;
