@@ -20,7 +20,7 @@ void Information()
     std::cout << "2 - получить случайное слово " << std::endl;
     std::cout << "3 - проверка перевода с русского на английский" << std::endl;
     std::cout << "4 - проверка перевода с английского на русский" << std::endl;
-    std::cout << "5 - фразы на английском (еще не готово)" << std::endl;
+    std::cout << "5 - фразы на английском" << std::endl;
 }
 void InputEnglishWords(std::string line) //input new eng word
 {
@@ -48,7 +48,8 @@ void RandomOutput() //output random couple words
     while (!EngWordsOutput.eof()) {
         index += 1;
         std::string buffer;
-        EngWordsOutput >> buffer;
+        std::getline(EngWordsOutput, buffer);
+        //EngWordsOutput >> buffer;
     }
     unsigned int digit = time(NULL)*rand() % (index)+1; //the formula was stole from the internet
     EngWordsOutput.close();
@@ -81,7 +82,8 @@ void Zverify()//output translated, input eng
     std::string Translate;
     for (; !Translated.eof(); ) {
         std::string buffer;
-        Translated >> buffer;
+        std::getline(Translated, buffer);
+        //Translated >> buffer;
         index += 1;
     }
     Translated.close();
@@ -90,7 +92,8 @@ void Zverify()//output translated, input eng
     for (int i = 0; i < digit; i++)
     {
         std::string buffer;
-        TranslatedSecond >> buffer;
+        std::getline(TranslatedSecond, buffer);
+        //TranslatedSecond >> buffer;
         if (i == digit - 1)
         {
             Translate = buffer;
@@ -102,7 +105,8 @@ void Zverify()//output translated, input eng
     for (int i = 0; i < digit; i++)
     {
         std::string buffer;
-        EngWord >> buffer;
+        std::getline(EngWord, buffer);
+        //EngWord >> buffer;
         if (i == digit - 1)
         {
             bool temp = false;
@@ -129,7 +133,7 @@ void ReverseVerify() //output eng, input translated
     std::string Translate;
     for (; !Translated.eof(); ) {
         std::string buffer;
-        Translated >> buffer;
+        std::getline(Translated, buffer);
         index += 1;
     }
     Translated.close();
@@ -138,7 +142,7 @@ void ReverseVerify() //output eng, input translated
     for (int i = 0; i < digit; i++)
     {
         std::string buffer;
-        TranslatedSecond >> buffer;
+        std::getline(TranslatedSecond, buffer);
         if (i == digit - 1)
         {
             Translate = buffer;
@@ -150,7 +154,8 @@ void ReverseVerify() //output eng, input translated
     for (int i = 0; i < digit; i++)
     {
         std::string buffer;
-        EngWord >> buffer;
+        std::getline(EngWord, buffer);
+        //EngWord >> buffer;
         if (i == digit - 1)
         {
             bool temp = false;
@@ -160,8 +165,10 @@ void ReverseVerify() //output eng, input translated
                 std::cin >> InputWord;
                 if (InputWord == buffer)
                     temp = true;
-                else
+                else {              //REVIEW
                     std::cout << "Неверно. Попробуйте еще раз" << std::endl;
+                    std::cout << buffer << std::endl;
+                }
             }
             std::cout << "You're right" << std::endl;
             break;
@@ -189,6 +196,7 @@ void RandomPhrases()
             std::cout << buffer << std::endl;
         }
     }
+    PhraseSecond.close();
     Information();
 }
 
