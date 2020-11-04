@@ -6,13 +6,13 @@
 5.По приколу можно сделать экзамен. Набираешь N-е кол-во очков - получаешь ссылку на гифку с котиком
 6.Поиск перевода конретного слова
 
-666.Возможно добавить отдельно фразы (но без проверки на правильность перевода - сразу с переводом выдавать)
+666.Вместо передачи слова в функции записи нового сделать ссылкой, дабы не копировать его лишний раз
 */
 #include <fstream>//for possibility work with files
 #include <iostream> //for input/output
 #include <ctime> //for random numerics
 #include <Windows.h>//for correct output in Russian
-#include <string>
+#include <string> //if u don't understand why this library is here, than close this and go away
 void Information()
 {
     std::cout << "0 - Закончить" << std::endl;
@@ -24,10 +24,10 @@ void Information()
 }
 void InputEnglishWords(std::string line) //input new eng word
 {
-    std::ofstream EngWords("english.txt", std::ios_base::app); // ios_base - функция ДОзаписи в файл под названием cppstudio.txt
+    std::ofstream EngWords("english.txt", std::ios_base::app); // ios_base - function of extra recording in the file
     EngWords << "\n";
     EngWords << line;//cannot bring with the lattest line. Just in cause.
-    EngWords.close(); //здесь описание последующих действий НЕ нужно (т.е. Information here is useless)
+    EngWords.close(); //Information() here is useless
 }
 void InputTranslatedWords () //input new translated word
 {
@@ -45,11 +45,10 @@ void RandomOutput() //output random couple words
 {
     unsigned int index = 0;
     std::ifstream EngWordsOutput("english.txt"); 
-    while (!EngWordsOutput.eof()) {
+    while (!EngWordsOutput.eof()) { //to calculate quantity of lines in the file
         index += 1;
         std::string buffer;
         std::getline(EngWordsOutput, buffer);
-        //EngWordsOutput >> buffer;
     }
     unsigned int digit = time(NULL)*rand() % (index)+1; //the formula was stole from the internet
     EngWordsOutput.close();
@@ -80,10 +79,9 @@ void Zverify()//output translated, input eng
     std::ifstream Translated("translated.txt");
     int index = 0;
     std::string Translate;
-    for (; !Translated.eof(); ) {
+    for (; !Translated.eof(); ) { //to calculate quantity of lines in the file
         std::string buffer;
         std::getline(Translated, buffer);
-        //Translated >> buffer;
         index += 1;
     }
     Translated.close();
@@ -93,7 +91,6 @@ void Zverify()//output translated, input eng
     {
         std::string buffer;
         std::getline(TranslatedSecond, buffer);
-        //TranslatedSecond >> buffer;
         if (i == digit - 1)
         {
             Translate = buffer;
@@ -106,7 +103,6 @@ void Zverify()//output translated, input eng
     {
         std::string buffer;
         std::getline(EngWord, buffer);
-        //EngWord >> buffer;
         if (i == digit - 1)
         {
             bool temp = false;
@@ -144,9 +140,7 @@ void ReverseVerify() //output eng, input translated
         std::string buffer;
         std::getline(TranslatedSecond, buffer);
         if (i == digit - 1)
-        {
             Translate = buffer;
-        }
     }
     TranslatedSecond.close();//edge of output translated word
     std::cout << Translate << std::endl << "Введите перевод" << std::endl;
@@ -164,7 +158,7 @@ void ReverseVerify() //output eng, input translated
                 std::getline(std::cin, InputWord);
                 if (InputWord == buffer)
                     temp = true;
-                else {                                                                            //REVIEW
+                else {                                                                                  //REVIEW
                     std::cout << "Неверно. Попробуйте еще раз" << std::endl;
                     //std::cout << InputWord << ' ' << buffer << std::endl;
                 }
@@ -175,11 +169,11 @@ void ReverseVerify() //output eng, input translated
     }
     Information();
 }
-void RandomPhrases() //output random phrase in eng and translate
+std::string RandomPhrases() //output random phrase in eng and translate
 {
     unsigned int index = 0;
     std::ifstream Phrase("phrases.txt");
-    while (!Phrase.eof()) {
+    while (!Phrase.eof()) { //to calculate quantity of lines in the file
         index += 1;
         std::string buffer;
         std::getline(Phrase, buffer);
@@ -191,7 +185,7 @@ void RandomPhrases() //output random phrase in eng and translate
         std::string buffer;
         std::getline(PhraseSecond, buffer);
         if (i == digit - 1) {
-            std::cout << buffer << std::endl;
+            return buffer;
         }
     }
     PhraseSecond.close();
@@ -202,7 +196,7 @@ int main(int argc, char* argv[])
 {
     SetConsoleCP(1251);//correct input
     SetConsoleOutputCP(1251);//correct output
-    int index;//magic number, yeah
+    int index;
     std::string line;
     Information();
     while (std::cin >> index && index != 0)
@@ -225,7 +219,8 @@ int main(int argc, char* argv[])
             ReverseVerify();
             break;
         case 5:
-            RandomPhrases();
+            std::cout << RandomPhrases() << std::endl;
+            Information();
             break;
         default:
             Information();
