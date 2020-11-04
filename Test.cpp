@@ -4,6 +4,7 @@
 3.Удаление конкретных слов
 4.Примеры использования слов в том или ином контексте
 5.По приколу можно сделать экзамен. Набираешь N-е кол-во очков - получаешь ссылку на гифку с котиком
+6.Поиск перевода конретного слова
 
 666.Возможно добавить отдельно фразы (но без проверки на правильность перевода - сразу с переводом выдавать)
 */
@@ -168,11 +169,34 @@ void ReverseVerify() //output eng, input translated
     }
     Information();
 }
+void RandomPhrases()
+{
+    unsigned int index = 0;
+    std::ifstream Phrase("phrases.txt");
+    while (!Phrase.eof()) {
+        index += 1;
+        std::string buffer;
+        std::getline(Phrase, buffer);
+    }
+    std::cout << index << " index" << std::endl;
+    unsigned int digit = time(NULL) * rand() % (index)+1; //the formula was stole from the internet
+    Phrase.close();
+    std::ifstream PhraseSecond("phrases.txt");
+    for (int i = 0; i < digit; i++) {
+        std::string buffer;
+        std::getline(PhraseSecond, buffer);
+        if (i == digit - 1) {
+            std::cout << buffer << std::endl;
+        }
+    }
+    Information();
+}
 
 int main(int argc, char* argv[])
 {
     SetConsoleCP(1251);//correct input
     SetConsoleOutputCP(1251);//correct output
+    setlocale(LC_ALL, "");
     int index;//magic number, yeah
     std::string line;
     Information();
@@ -194,6 +218,9 @@ int main(int argc, char* argv[])
             break;
         case 4:
             ReverseVerify();
+            break;
+        case 5:
+            RandomPhrases();
             break;
         default:
             Information();
