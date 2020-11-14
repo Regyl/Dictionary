@@ -205,7 +205,7 @@ int main(int argc, char* argv[])
         {
         case 1:
             std::cout << "Just write this FWord" << std::endl;
-            std::cin >> line;
+            std::getline(std::cin, line);
             InputEnglishWords(line);
             InputTranslatedWords();
             break;
