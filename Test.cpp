@@ -22,23 +22,29 @@ void Information()
     std::cout << "4 - проверка перевода с английского на русский" << std::endl;
     std::cout << "5 - фразы на английском" << std::endl;
 }
-void InputEnglishWords(std::string line) //input new eng word
+void InputTranslatedWords() //input new translated word
 {
-    std::ofstream EngWords("english.txt", std::ios_base::app); // ios_base - function of extra recording in the file
-    EngWords << "\n";
-    EngWords << line;//cannot bring with the lattest line. Just in cause.
-    EngWords.close(); //Information() here is useless
-}
-void InputTranslatedWords () //input new translated word
-{
-    std::cout << "Введите перевод слова"<<std::endl;
+    std::cout << "Введите перевод слова" << std::endl;
     std::ofstream TranslatedWords("translated.txt", std::ios_base::app);
     std::string TranslatedLine;
-    std::cin >> TranslatedLine;
+    std::getline(std::cin, TranslatedLine);
     TranslatedWords << "\n";
     TranslatedWords << TranslatedLine;
     TranslatedWords.close();
     Information();
+}
+
+void InputEnglishWords() //input new eng word
+{
+    std::ofstream EngWords("english.txt", std::ios_base::app); // ios_base - function of extra recording in the file
+    std::string line;
+    std::getline(std::cin, line);
+    EngWords << "\n";
+    if (line == "") //crutch. Just because I break down something (idk what exactly) and input new english word don't work with that 2 lines
+        std::getline(std::cin, line);
+    EngWords << line;//cannot bring with the lattest line. Just in cause.
+    EngWords.close(); //Information() here is useless
+    InputTranslatedWords();
 }
 
 void RandomOutput() //output random couple words
@@ -197,7 +203,6 @@ int main(int argc, char* argv[])
     SetConsoleCP(1251);//correct input
     SetConsoleOutputCP(1251);//correct output
     int index;
-    std::string line;
     Information();
     while (std::cin >> index && index != 0)
     {
@@ -205,9 +210,7 @@ int main(int argc, char* argv[])
         {
         case 1:
             std::cout << "Just write this FWord" << std::endl;
-            std::getline(std::cin, line);
-            InputEnglishWords(line);
-            InputTranslatedWords();
+            InputEnglishWords();
             break;
         case 2:
             RandomOutput();
