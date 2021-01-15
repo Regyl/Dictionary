@@ -4,7 +4,6 @@
 3.Удаление конкретных слов
 4.Примеры использования слов в том или ином контексте
 5.По приколу можно сделать экзамен. Набираешь N-е кол-во очков - получаешь ссылку на гифку с котиком
-6.Поиск перевода конретного слова
 
 666.Вместо передачи слова в функции записи нового сделать ссылкой, дабы не копировать его лишний раз
 */
@@ -15,16 +14,18 @@
 #include <string> //if u don't understand why this library is here, than close this and go away
 void Information()
 {
-    std::cout << "0 - Закончить" << std::endl;
-    std::cout << "1 - записать новое слово " << std::endl;
-    std::cout << "2 - получить случайное слово " << std::endl;
-    std::cout << "3 - проверка перевода с русского на английский" << std::endl;
-    std::cout << "4 - проверка перевода с английского на русский" << std::endl;
-    std::cout << "5 - фразы на английском" << std::endl;
+    std::cout << "---------------------------------------------" << std::endl;
+    std::cout << "0 - End" << std::endl;
+    std::cout << "1 - record new word" << std::endl;
+    std::cout << "2 - get random word" << std::endl;
+    std::cout << "3 - verificate Rus into Eng translation" << std::endl;
+    std::cout << "4 - verificate Eng into Rus translation" << std::endl;
+    std::cout << "5 - phrases in English" << std::endl;
+    std::cout << "---------------------------------------------" << std::endl;
 }
 void InputTranslatedWords() //input new translated word
 {
-    std::cout << "Введите перевод слова" << std::endl;
+    std::cout << "Enter the translate of word:" << std::endl;
     std::ofstream TranslatedWords("translated.txt", std::ios_base::app);
     std::string TranslatedLine;
     std::getline(std::cin, TranslatedLine);
@@ -80,7 +81,7 @@ void RandomOutput() //output random couple words
     Information();
 }
 
-void Zverify()//output translated, input eng
+void EngVerify()//output in your native language, input in Engish
 {
     std::ifstream Translated("translated.txt");
     int index = 0;
@@ -103,7 +104,7 @@ void Zverify()//output translated, input eng
         }
     }
     TranslatedSecond.close();//edge of output translated word
-    std::cout << Translate << std::endl << "Введите перевод" << std::endl;
+    std::cout << Translate << std::endl << "Enter the translation:" << std::endl;
     std::ifstream EngWord("english.txt");
     for (int i = 0; i < digit; i++)
     {
@@ -116,19 +117,25 @@ void Zverify()//output translated, input eng
             {
                 std::string InputWord; //перевод слова, вводимый с клавиатуры
                 std::getline(std::cin, InputWord);
-                if (InputWord == buffer)
-                    temp = true;
-                else
+                if (InputWord == buffer || InputWord == "help") {
+                    if (InputWord == buffer)
+                        temp = true;
+                    else
+                        std::cout << buffer << " is right answer." << std::endl;
+                }
+                else {
                     std::cout << "Неверно. Попробуйте еще раз" << std::endl;
+                    std::cout << "If you need a clue write *help*" << std::endl;
+                }
             }
-            std::cout << "You're right" << std::endl;
+            std::cout << "Definitely!" << std::endl;
             break;
         }
     }
     Information();
 }
 
-void ReverseVerify() //output eng, input translated
+void NativeVerify() //output English word, input in your native language
 {
     std::ifstream Translated("english.txt");
     int index = 0;
@@ -149,7 +156,7 @@ void ReverseVerify() //output eng, input translated
             Translate = buffer;
     }
     TranslatedSecond.close();//edge of output translated word
-    std::cout << Translate << std::endl << "Введите перевод" << std::endl;
+    std::cout << Translate << std::endl << "Enter the translation:" << std::endl;
     std::ifstream EngWord("translated.txt");
     for (int i = 0; i < digit; i++)
     {
@@ -162,14 +169,18 @@ void ReverseVerify() //output eng, input translated
             {
                 std::string InputWord; //перевод слова, вводимый с клавиатуры
                 std::getline(std::cin, InputWord);
-                if (InputWord == buffer)
-                    temp = true;
+                if (InputWord == buffer || InputWord == "help") {
+                    if (InputWord == buffer)
+                        temp = true;
+                    else
+                        std::cout << buffer << " was the right answer." << std::endl;
+                }
                 else {                                                                                  //REVIEW
                     std::cout << "Неверно. Попробуйте еще раз" << std::endl;
-                    //std::cout << InputWord << ' ' << buffer << std::endl;
+                    std::cout << "If you need a clue write *help*" << std::endl;
                 }
             }
-            std::cout << "You're right" << std::endl;
+            std::cout << "Excellent!" << std::endl;
             break;
         }
     }
@@ -204,8 +215,10 @@ int main(int argc, char* argv[])
     SetConsoleOutputCP(1251);//correct output
     int index;
     Information();
+    std::cout << "Your decision:";
     while (std::cin >> index && index != 0)
     {
+        std::cout << std::endl;
         switch (index)
         {
         case 1:
@@ -216,10 +229,10 @@ int main(int argc, char* argv[])
             RandomOutput();
             break;
         case 3:
-            Zverify();
+            EngVerify();
             break;
         case 4:
-            ReverseVerify();
+            NativeVerify();
             break;
         case 5:
             std::cout << RandomPhrases() << std::endl;
@@ -228,6 +241,10 @@ int main(int argc, char* argv[])
         default:
             Information();
         }
+        std::cout << "Your decision:";
     }
+    std::cout << "|----------------------------------------|" << std::endl;
+    std::cout << "|----          See you soon!         ----|" << std::endl;
+    std::cout << "|----------------------------------------|" << std::endl;
     return 0;
 }

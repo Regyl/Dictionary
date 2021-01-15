@@ -1,0 +1,4 @@
+C:\Users\novik\source\repos\Test\Debug\Test.exe
+C:\Users\novik\source\repos\Test\Debug\Test.pdb
+C:\Users\novik\Documents\GitHub\Dictionary\Debug\Test.exe
+C:\Users\novik\Documents\GitHub\Dictionary\Debug\Test.pdb
