@@ -1,6 +1,5 @@
 ﻿/*
 1.Добавить возможность исправления слова
-2.Во время записи новых слов проверить, не записано ли уже это слово
 3.Удаление конкретных слов
 4.Примеры использования слов в том или ином контексте
 5.По приколу можно сделать экзамен. Набираешь N-е кол-во очков - получаешь ссылку на гифку с котиком
@@ -37,12 +36,22 @@ void InputTranslatedWords() //input new translated word
 
 void InputEnglishWords() //input new eng word
 {
-    std::ofstream EngWords("english.txt", std::ios_base::app); // ios_base - function of extra recording in the file
     std::string line;
     std::getline(std::cin, line);
-    EngWords << "\n";
-    if (line == "") //crutch. Just because I break down something (idk what exactly) and input new english word don't work with that 2 lines
+    if (line == "") //crutch. Just because I break down something (idk what exactly) and input new english word don't work without that 2 lines
         std::getline(std::cin, line);
+    std::ifstream VerifyLackWord("english.txt"); //to ensure in lack new word
+    while (!VerifyLackWord.eof()) {
+        std::string WordInFile;
+        std::getline(VerifyLackWord, WordInFile);
+        if (WordInFile == line) {
+            std::cout << "This word already in dictionary. \n Recording wasn't complete." << std::endl;
+            return; //end of input new word
+        }
+    }
+    VerifyLackWord.close();
+    std::ofstream EngWords("english.txt", std::ios_base::app); // ios_base - function of extra recording in the file
+    EngWords << "\n";
     EngWords << line;//cannot bring with the lattest line. Just in cause.
     EngWords.close(); //Information() here is useless
     InputTranslatedWords();

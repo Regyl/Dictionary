@@ -1,10 +1,10 @@
 ﻿  Test.cpp
-C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(64,23): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(73,23): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(98,23): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(110,23): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(152,23): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(162,23): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(202,23): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(211): warning C4715: RandomPhrases: значение возвращается не при всех путях выполнения
+C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(72,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(81,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(106,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(118,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(160,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(170,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(210,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\novik\Documents\GitHub\Dictionary\Test.cpp(219): warning C4715: RandomPhrases: значение возвращается не при всех путях выполнения
   Test.vcxproj -> C:\Users\novik\Documents\GitHub\Dictionary\Debug\Test.exe
