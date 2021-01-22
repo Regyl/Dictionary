@@ -20,7 +20,16 @@ void Information()
     std::cout << "3 - verificate Rus into Eng translation" << std::endl;
     std::cout << "4 - verificate Eng into Rus translation" << std::endl;
     std::cout << "5 - phrases in English" << std::endl;
+    std::cout << "6 - remove particular word(don't work yet)" << std::endl;
     std::cout << "---------------------------------------------" << std::endl;
+}
+void RemoveWordInNative()
+{   
+    
+}
+void RemoveWordInForeign()
+{
+    
 }
 void InputTranslatedWords() //input new translated word
 {
@@ -32,6 +41,8 @@ void InputTranslatedWords() //input new translated word
     TranslatedWords << TranslatedLine;
     TranslatedWords.close();
     Information();
+    //std::cout << "Write *correct* if you wanna remedy last word (don't realized yet)" << std::endl;
+    //std::cout << "---------------------------------------------" << std::endl;
 }
 
 void InputEnglishWords() //input new eng word
@@ -45,7 +56,7 @@ void InputEnglishWords() //input new eng word
         std::string WordInFile;
         std::getline(VerifyLackWord, WordInFile);
         if (WordInFile == line) {
-            std::cout << "This word already in dictionary. \n Recording wasn't complete." << std::endl;
+            std::cout << "This word already in dictionary.\nRecording wasn't complete." << std::endl;
             return; //end of input new word
         }
     }
@@ -203,7 +214,7 @@ std::string RandomPhrases() //output random phrase in eng and translate
         index += 1;
         std::string buffer;
         std::getline(Phrase, buffer);
-    }
+    }   
     unsigned int digit = time(NULL) * rand() % (index)+1; //the formula was stolen from the internet
     Phrase.close();
     std::ifstream PhraseSecond("phrases.txt");
@@ -246,6 +257,13 @@ int main(int argc, char* argv[])
         case 5:
             std::cout << RandomPhrases() << std::endl;
             Information();
+            break;
+        case 6:
+            std::cout << "Choose the language:" << std::endl;
+            std::cout << "1 - your native" << std::endl;
+            std::cout << "2 - foreign language" << std::endl;
+            int n; std::cin >> n;
+            n==1 ? RemoveWordInNative() : RemoveWordInForeign();
             break;
         default:
             Information();
